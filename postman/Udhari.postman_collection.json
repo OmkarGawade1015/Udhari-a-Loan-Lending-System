@@ -1,0 +1,126 @@
+{
+  "info": {
+    "name": "Udhari Lending API",
+    "description": "Nine required borrower and admin endpoints. Set local account variables before sending requests. No credentials are included.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register borrower",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{borrowerEmail}}\",\n  \"password\": \"{{borrowerPassword}}\",\n  \"fullName\": \"Demo Borrower\",\n  \"monthlyIncome\": 50000,\n  \"employmentType\": \"Salaried\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/register",
+            "description": "Creates a borrower profile. Choose a unique email and a private password locally."
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{loginEmail}}\",\n  \"password\": \"{{loginPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login",
+            "description": "Set loginEmail and loginPassword to the borrower or environment-bootstrapped admin account. Copy the returned token into borrowerToken or adminToken for protected requests."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Borrower",
+      "item": [
+        {
+          "name": "Apply for loan",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{borrowerToken}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"principal\": 50000,\n  \"tenureMonths\": 12\n}" },
+            "url": "{{baseUrl}}/api/loans"
+          }
+        },
+        {
+          "name": "List my loans",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{borrowerToken}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/api/loans"
+          }
+        },
+        {
+          "name": "Get repayment schedule",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{borrowerToken}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/api/loans/{{loanId}}/repayments"
+          }
+        },
+        {
+          "name": "Mark instalment paid",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{borrowerToken}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"confirm\": true\n}" },
+            "url": "{{baseUrl}}/api/repayments/{{repaymentId}}/pay"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "List loans by status",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/loans?status=APPLIED"
+          }
+        },
+        {
+          "name": "Approve loan",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"remark\": \"{{reviewRemark}}\"\n}" },
+            "url": "{{baseUrl}}/api/admin/loans/{{loanId}}/approve"
+          }
+        },
+        {
+          "name": "Reject loan",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"remark\": \"{{reviewRemark}}\"\n}" },
+            "url": "{{baseUrl}}/api/admin/loans/{{loanId}}/reject"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "borrowerEmail", "value": "" },
+    { "key": "borrowerPassword", "value": "" },
+    { "key": "loginEmail", "value": "" },
+    { "key": "loginPassword", "value": "" },
+    { "key": "borrowerToken", "value": "" },
+    { "key": "adminToken", "value": "" },
+    { "key": "loanId", "value": "" },
+    { "key": "repaymentId", "value": "" },
+    { "key": "reviewRemark", "value": "Reviewed for the demo." }
+  ]
+}

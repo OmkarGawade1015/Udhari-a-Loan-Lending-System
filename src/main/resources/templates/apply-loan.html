@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments :: head('Apply for a loan')}"></head>
+<body>
+<header th:replace="~{fragments :: navigation}"></header>
+<main class="page-shell">
+    <section class="form-panel" aria-labelledby="applyHeading">
+        <p class="eyebrow">New application</p>
+        <h1 id="applyHeading">Apply for a loan</h1>
+        <p>Choose a principal between ₹1,000 and ₹1,00,000 and a tenure from 3 to 60 months.</p>
+        <div id="applicationError" class="form-error" role="alert" aria-live="assertive" hidden></div>
+        <div id="applicationSuccess" class="form-success" role="status" aria-live="polite" hidden></div>
+        <form id="loanApplicationForm" th:attr="data-annual-rate=${annualInterestRate}" novalidate>
+            <div class="form-field">
+                <label for="principal">Loan principal (INR)</label>
+                <input id="principal" name="principal" type="number" inputmode="decimal"
+                       th:attr="min=${minimumPrincipal},max=${maximumPrincipal}" step="0.01" required>
+            </div>
+            <div class="form-field">
+                <label for="tenureMonths">Repayment tenure (months)</label>
+                <input id="tenureMonths" name="tenureMonths" type="number" inputmode="numeric"
+                       min="3" max="60" step="1" required>
+            </div>
+            <p class="emi-estimate" aria-live="polite">Estimated monthly EMI: <strong id="emiEstimate">Enter an amount and tenure</strong></p>
+            <button id="applyButton" class="button button-primary" type="submit">Submit application</button>
+        </form>
+        <p id="applicationResult" class="result-panel" hidden></p>
+    </section>
+</main>
+<script th:src="@{/js/apply-loan.js}" defer></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments :: head('Review loan application')}"></head>
+<body th:attr="data-loan-id=${loanId}">
+<header th:replace="~{fragments :: navigation}"></header>
+<main class="page-shell">
+    <section class="form-panel" aria-labelledby="reviewHeading">
+        <p class="eyebrow">Administrator review</p>
+        <h1 id="reviewHeading">Review application</h1>
+        <p id="reviewLoading" role="status">Loading application details…</p>
+        <div id="reviewError" class="form-error" role="alert" aria-live="assertive" hidden></div>
+        <div id="reviewSuccess" class="form-success" role="status" aria-live="polite" hidden></div>
+        <dl id="reviewDetails" class="detail-list" hidden>
+            <div><dt>Borrower</dt><dd id="borrowerDetails"></dd></div>
+            <div><dt>Principal</dt><dd id="principalDetails"></dd></div>
+            <div><dt>Tenure</dt><dd id="tenureDetails"></dd></div>
+            <div><dt>Monthly EMI</dt><dd id="emiDetails"></dd></div>
+            <div><dt>Status</dt><dd id="statusDetails"></dd></div>
+        </dl>
+        <form id="reviewForm" hidden>
+            <div class="form-field">
+                <label for="remark">Review remark <span class="optional-label">(required to reject)</span></label>
+                <textarea id="remark" name="remark" maxlength="500" rows="4"></textarea>
+            </div>
+            <div class="review-actions">
+                <button id="approveButton" class="button button-primary" type="button">Approve application</button>
+                <button id="rejectButton" class="button button-danger" type="button">Reject application</button>
+            </div>
+        </form>
+        <a class="back-link" th:href="@{/admin/loans}">Back to applications</a>
+    </section>
+</main>
+<script th:src="@{/js/admin-review.js}" defer></script>
+</body>
+</html>

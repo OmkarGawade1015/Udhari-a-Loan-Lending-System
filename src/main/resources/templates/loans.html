@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments :: head('My loans')}"></head>
+<body>
+<header th:replace="~{fragments :: navigation}"></header>
+<main class="page-shell">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Borrower workspace</p>
+            <h1>My loans</h1>
+            <p>Review application status, repayment amount and schedule.</p>
+        </div>
+        <a class="button button-primary action-link" th:href="@{/loans/apply}">Apply for a loan</a>
+    </section>
+    <p id="loansLoading" role="status">Loading your loans…</p>
+    <div id="loansError" class="form-error" role="alert" aria-live="assertive" hidden></div>
+    <p id="loansEmpty" class="empty-state" hidden>No loans found. Submit an application to get started.</p>
+    <div id="loansTableWrap" class="table-scroll" hidden>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Principal</th>
+                <th scope="col">Tenure</th>
+                <th scope="col">Monthly EMI</th>
+                <th scope="col">Status</th>
+                <th scope="col">Review remark</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+            </thead>
+            <tbody id="loansTableBody"></tbody>
+        </table>
+    </div>
+</main>
+<script th:src="@{/js/loans.js}" defer></script>
+</body>
+</html>

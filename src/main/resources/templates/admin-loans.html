@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments :: head('Loan applications')}"></head>
+<body>
+<header th:replace="~{fragments :: navigation}"></header>
+<main class="page-shell">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Administrator workspace</p>
+            <h1>Loan applications</h1>
+            <p>Review borrower requests and check application status.</p>
+        </div>
+        <div class="form-field filter-field">
+            <label for="statusFilter">Filter by status</label>
+            <select id="statusFilter">
+                <option value="">All statuses</option>
+                <option value="APPLIED">Applied</option>
+                <option value="APPROVED">Approved</option>
+                <option value="REJECTED">Rejected</option>
+                <option value="CLOSED">Closed</option>
+            </select>
+        </div>
+    </section>
+    <p id="adminLoansLoading" role="status">Loading applications…</p>
+    <div id="adminLoansError" class="form-error" role="alert" aria-live="assertive" hidden></div>
+    <p id="adminLoansEmpty" class="empty-state" hidden>No applications match this status.</p>
+    <div id="adminLoansTableWrap" class="table-scroll" hidden>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Borrower</th>
+                <th scope="col">Principal</th>
+                <th scope="col">Tenure</th>
+                <th scope="col">Monthly EMI</th>
+                <th scope="col">Status</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+            </thead>
+            <tbody id="adminLoansTableBody"></tbody>
+        </table>
+    </div>
+</main>
+<script th:src="@{/js/admin-loans.js}" defer></script>
+</body>
+</html>

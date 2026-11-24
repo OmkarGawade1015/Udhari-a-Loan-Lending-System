@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle} + ' | Udhari'">Udhari</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <script th:src="@{/js/api.js}" defer></script>
+</head>
+
+<header th:fragment="navigation" class="site-header">
+    <a class="brand" data-brand-link th:href="@{/}" aria-label="Udhari home">Udhari</a>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a data-nav-role="BORROWER" th:href="@{/dashboard}" hidden>Dashboard</a>
+        <a data-nav-role="BORROWER" th:href="@{/loans/apply}" hidden>Apply for loan</a>
+        <a data-nav-role="BORROWER" th:href="@{/loans}" hidden>My loans</a>
+        <a data-nav-role="ADMIN" th:href="@{/admin/loans}" hidden>Applications</a>
+        <button id="logoutButton" type="button" hidden>Log out</button>
+    </nav>
+</header>
+
+<main th:fragment="page(content)" class="page-shell">
+    <section th:replace="${content}"></section>
+</main>
+
+<div th:fragment="feedback" id="pageFeedback" class="feedback" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

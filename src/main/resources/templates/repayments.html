@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments :: head('Repayment schedule')}"></head>
+<body th:attr="data-loan-id=${loanId}">
+<header th:replace="~{fragments :: navigation}"></header>
+<main class="page-shell">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Loan repayment</p>
+            <h1>Repayment schedule</h1>
+            <p>Review instalments and update demo payment tracking.</p>
+        </div>
+        <a class="button action-link" th:href="@{/loans}">Back to my loans</a>
+    </section>
+    <div id="repaymentMessage" class="form-success" role="status" aria-live="polite" hidden></div>
+    <div id="repaymentsError" class="form-error" role="alert" aria-live="assertive" hidden></div>
+    <p id="repaymentsLoading" role="status">Loading repayment schedule…</p>
+    <p id="repaymentsEmpty" class="empty-state" hidden>No repayment schedule is available for this loan.</p>
+    <div id="repaymentsTableWrap" class="table-scroll" hidden>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Instalment</th>
+                <th scope="col">Due date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+            </thead>
+            <tbody id="repaymentsTableBody"></tbody>
+        </table>
+    </div>
+</main>
+<script th:src="@{/js/repayments.js}" defer></script>
+</body>
+</html>

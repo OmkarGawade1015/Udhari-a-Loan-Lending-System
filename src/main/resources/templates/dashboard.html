@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments :: head('Borrower dashboard')}"></head>
+<body>
+<header th:replace="~{fragments :: navigation}"></header>
+<main class="page-shell">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Borrower workspace</p>
+            <h1>Your dashboard</h1>
+            <p>Keep track of your applications and repayments.</p>
+        </div>
+        <a class="button button-primary action-link" th:href="@{/loans/apply}">Apply for a loan</a>
+    </section>
+    <div id="dashboardError" class="form-error" role="alert" aria-live="assertive" hidden></div>
+    <p id="dashboardLoading" role="status">Loading your loans…</p>
+    <div id="loanSummary" class="summary-grid" hidden>
+        <article class="summary-card"><span>Applications</span><strong id="appliedCount">0</strong></article>
+        <article class="summary-card"><span>Approved</span><strong id="approvedCount">0</strong></article>
+        <article class="summary-card"><span>Rejected</span><strong id="rejectedCount">0</strong></article>
+        <article class="summary-card"><span>Closed</span><strong id="closedCount">0</strong></article>
+    </div>
+    <p id="dashboardEmpty" class="empty-state" hidden>You have no loans yet. Start with an application when you’re ready.</p>
+</main>
+<script th:src="@{/js/dashboard.js}" defer></script>
+</body>
+</html>
