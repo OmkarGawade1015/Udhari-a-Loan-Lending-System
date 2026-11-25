@@ -42,6 +42,9 @@ public class RepaymentPaymentService {
         if (!loan.getBorrower().getUser().getId().equals(authenticatedBorrower.getId())) {
             throw new AuthorizationException("This repayment does not belong to the authenticated borrower.");
         }
+        if (loan.getStatus() != LoanStatus.APPROVED) {
+            throw new InvalidLoanStateException("Payments can only be recorded for an APPROVED loan.");
+        }
         if (!repayment.getStatus().canTransitionTo(RepaymentStatus.PAID)) {
             throw new InvalidLoanStateException("Only a PENDING instalment can be marked paid.");
         }

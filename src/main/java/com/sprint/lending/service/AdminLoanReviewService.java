@@ -41,8 +41,14 @@ public class AdminLoanReviewService {
 
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new LoanNotFoundException("Loan was not found."));
-        if (loan.getStatus() != LoanStatus.APPLIED) {
+        if (!loan.getStatus().canTransitionTo(LoanStatus.APPROVED)) {
             throw new InvalidLoanStateException("Only an APPLIED loan can be approved.");
+        }
+        if (remark == null || remark.isBlank()) {
+            throw new IllegalArgumentException("An approval remark is required.");
+        }
+        if (!repaymentRepository.findAllByLoan_IdOrderByInstallmentNumberAsc(loanId).isEmpty()) {
+            throw new InvalidLoanStateException("A repayment schedule already exists for this loan.");
         }
 
         loan.setStatus(LoanStatus.APPROVED);
